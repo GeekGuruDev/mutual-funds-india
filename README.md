@@ -1,16 +1,16 @@
-# Mutual Fund India
+# Mutual Funds India
 
 Web app of Mutual Fund India built using ReactJS and Tailwind CSS.
 
 [mfapi](https://www.mfapi.in/) is used for API
 
-<!-- ### [Live Demo](https://time-converter1.netlify.app/) -->
+### [Live Demo](https://mutual-fund-india.netlify.app/)
 
 # Installation and Run
 
 1. Clone the repository
    ```
-   https://github.com/Gurpreeet-Singh/time-converter
+   https://github.com/Gurpreeet-Singh/mutual-funds-india
    ```
 2. To install the dependencies, simply write
    ```
