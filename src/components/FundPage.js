@@ -91,7 +91,7 @@ const FundPage = () => {
               top: 0,
               right: 12,
               left: -24,
-              bottom: 40,
+              bottom: 20,
             }}
           >
             <CartesianGrid stroke="#ccc" vertical={false} />
