@@ -4,7 +4,7 @@ Web app of Mutual Fund India built using ReactJS and Tailwind CSS.
 
 [mfapi](https://www.mfapi.in/) is used for API
 
-### [Live Demo](https://mutual-fund-india.netlify.app/)
+### [Live Demo](https://mutual-funds-india.netlify.app/)
 
 # Installation and Run
 
