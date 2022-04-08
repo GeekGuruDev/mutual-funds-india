@@ -4,6 +4,15 @@ import { AppContext } from "../context";
 import FundInfo from "./FundInfo";
 import Loading from "./Loading";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 const FundPage = () => {
   const { schemeCode } = useParams();
@@ -32,16 +41,27 @@ const FundPage = () => {
 
   const {
     meta: { fund_house, scheme_name, scheme_type, scheme_category },
-    data: [{ date: currentDate, nav: currentNav }, { nav: preNav }],
+    data,
   } = fund;
+
+  const [{ date: currentDate, nav: currentNav }, { nav: preNav }] = data;
+  const chartData = data.slice(0, 30).reverse();
   const change = Math.round((currentNav - preNav) * 100000) / 100000;
   const changeRate = Number((change * 100) / preNav).toFixed(2);
 
   return (
-    <section className="max-w-xl mx-auto bg-white my-10 rounded p-8">
-      <h1 className="text-2xl tracking-wider font-bold">{scheme_name}</h1>
-      <article className="my-8">
-        <h5 className="text-sm font-medium">Nav</h5>
+    <section className="max-w-3xl mx-auto bg-white rounded-md p-8 shadow-lg">
+      <h1 className="text-2xl tracking-wider font-bold border-b border-slate-300 pb-5 mb-10">
+        {scheme_name}
+      </h1>
+
+      <article className="flex flex-wrap justify-between gap-y-5 tracking-wide">
+        <FundInfo name="Fund House" value={fund_house} />
+        <FundInfo name="Type" value={scheme_type} />
+        <FundInfo name="Category" value={scheme_category} />
+      </article>
+      <article className="my-10">
+        <h5 className="text-sm tracking-widest text-slate-400 ">Nav</h5>
         <div className="flex gap-3 items-stretch">
           <span className="text-2xl font-medium">₹ {currentNav}</span>
           <div
@@ -57,10 +77,31 @@ const FundPage = () => {
         </div>
         <p className="my-1 text-slate-400">Last Updated on {currentDate}</p>
       </article>
-      <article className="flex flex-wrap justify-between gap-y-5 tracking-wide">
-        <FundInfo name="Fund House" value={fund_house} />
-        <FundInfo name="Type" value={scheme_type} />
-        <FundInfo name="Category" value={scheme_category} />
+      <article className="">
+        <p className="py-2 text-center">30 days chart</p>
+        <ResponsiveContainer width={"100%"} aspect={1.8}>
+          <LineChart
+            data={chartData}
+            margin={{
+              top: 0,
+              right: 8,
+              left: -36,
+              bottom: 40,
+            }}
+          >
+            <CartesianGrid stroke="#ccc" vertical={false} />
+            <Line
+              type="linear"
+              dataKey="nav"
+              stroke="#38bdf8"
+              strokeWidth={2}
+              dot={false}
+            />
+            <XAxis dataKey="date" angle={-30} dx={-20} dy={20} />
+            <YAxis domain={["auto", "auto"]} />
+            <Tooltip />
+          </LineChart>
+        </ResponsiveContainer>
       </article>
     </section>
   );
