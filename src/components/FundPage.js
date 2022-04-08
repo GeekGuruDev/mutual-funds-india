@@ -45,7 +45,12 @@ const FundPage = () => {
   } = fund;
 
   const [{ date: currentDate, nav: currentNav }, { nav: preNav }] = data;
-  const chartData = data.slice(0, 30).reverse();
+  const chartData = data
+    .slice(0, 30)
+    .reverse()
+    .map(({ nav, date }) => {
+      return { Nav: Number(nav), date: date.slice(0, 5).replace("-", "/") };
+    });
   const change = Math.round((currentNav - preNav) * 100000) / 100000;
   const changeRate = Number((change * 100) / preNav).toFixed(2);
 
@@ -60,7 +65,7 @@ const FundPage = () => {
         <FundInfo name="Type" value={scheme_type} />
         <FundInfo name="Category" value={scheme_category} />
       </article>
-      <article className="my-10">
+      <article className="my-12">
         <h5 className="text-sm tracking-widest text-slate-400 ">Nav</h5>
         <div className="flex gap-3 items-stretch">
           <span className="text-2xl font-medium">₹ {currentNav}</span>
@@ -79,26 +84,30 @@ const FundPage = () => {
       </article>
       <article className="">
         <p className="py-2 text-center">30 days chart</p>
-        <ResponsiveContainer width={"100%"} aspect={1.8}>
+        <ResponsiveContainer width={"100%"} height={300}>
           <LineChart
             data={chartData}
             margin={{
               top: 0,
-              right: 8,
-              left: -36,
+              right: 12,
+              left: -24,
               bottom: 40,
             }}
           >
             <CartesianGrid stroke="#ccc" vertical={false} />
             <Line
               type="linear"
-              dataKey="nav"
+              dataKey="Nav"
               stroke="#38bdf8"
               strokeWidth={2}
               dot={false}
             />
-            <XAxis dataKey="date" angle={-30} dx={-20} dy={20} />
-            <YAxis domain={["auto", "auto"]} />
+            <XAxis dataKey="date" minTickGap={15} />
+            <YAxis
+              type="number"
+              domain={["auto", "auto"]}
+              allowDecimals={false}
+            />
             <Tooltip />
           </LineChart>
         </ResponsiveContainer>
