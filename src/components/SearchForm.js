@@ -7,7 +7,7 @@ const SearchForm = () => {
   const { loading, funds, searchText, setSearchText } = useContext(AppContext);
   return (
     <form
-      className=" max-w-xl mx-auto"
+      className="max-w-lg mx-auto"
       onSubmit={(e) => {
         e.preventDefault();
       }}
